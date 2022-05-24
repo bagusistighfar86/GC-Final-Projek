@@ -1,0 +1,47 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1653380359",
+        "python_version": "3.8.10 (tags/v3.8.10:3d8993a, May  3 2021, 11:48:03) [MSC v.1928 64 bit (AMD64)]",
+        "command_line_arguments": "D:\\SEMESTER 6\\AKADEMIK\\GAME CERDAS\\TUGAS\\PROJEK FP\\AI-Racing-Karts-main\\venv\\Scripts\\mlagents-learn --force",
+        "mlagents_version": "0.29.0",
+        "mlagents_envs_version": "0.29.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.11.0+cpu",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1653380391"
+    },
+    "total": 32.4050205,
+    "count": 1,
+    "self": 0.06780940000000157,
+    "children": {
+        "run_training.setup": {
+            "total": 0.4586758000000002,
+            "count": 1,
+            "self": 0.4586758000000002
+        },
+        "TrainerController.start_learning": {
+            "total": 31.8785353,
+            "count": 1,
+            "self": 0.0006346999999955472,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 31.877868400000004,
+                    "count": 1,
+                    "self": 31.877868400000004
+                },
+                "trainer_threads": {
+                    "total": 1.6999999985500835e-06,
+                    "count": 1,
+                    "self": 1.6999999985500835e-06
+                },
+                "TrainerController._save_models": {
+                    "total": 3.0500000001154604e-05,
+                    "count": 1,
+                    "self": 3.0500000001154604e-05
+                }
+            }
+        }
+    }
+}
