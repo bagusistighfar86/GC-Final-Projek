@@ -64,7 +64,7 @@ engine_settings:
   no_graphics: false
 environment_parameters: null
 checkpoint_settings:
-  run_id: tes1
+  run_id: tes2
   initialize_from: null
   load_model: false
   resume: true

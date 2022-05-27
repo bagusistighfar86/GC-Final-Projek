@@ -19,6 +19,8 @@ public class KartAgent : Agent
    //Dipanggil saat waktu habis dan telah mencapai goal
    public override void OnEpisodeBegin()
    {
+      // transform.position = _spawnPosition.position + new Vector3(Random.Range(-5f, +5f),0, Random.Range(-5f, +5f));
+      // transform.forward = _spawnPosition.forward;
       _checkpointManager.ResetCheckpoints();
       _kartController.Respawn();
    }
@@ -28,6 +30,10 @@ public class KartAgent : Agent
       //Mengumpulkan informasi tambahan yang tidak diambil oleh RaycastSensors
       public override void CollectObservations(VectorSensor sensor)
       {
+         // Vector3 checkpointForward = _checkpointManager.nextCheckPointToReach.transform.forward;
+         // float directionDot = Vector3.Dot(transform.forward, checkpointForward);
+         // sensor.AddObservation(directionDot);
+
          // Vector antara Kart dengan Checkpoint
          Vector3 diff = _checkpointManager.nextCheckPointToReach.transform.position - transform.position;
          sensor.AddObservation(diff / 20f);
@@ -59,5 +65,11 @@ public class KartAgent : Agent
          }
       }
       
+      public void OnTriggerEnter (Collider col){
+         if (col.gameObject.CompareTag("Wall")) {
+            Debug.Log("NABRAK WALLL");
+            AddReward(-0.5f);
+         }
+      }
    #endregion
 }
