@@ -17,6 +17,8 @@ public class CheckpointManager : MonoBehaviour
 
     public event Action<Checkpoint> reachedCheckpoint; 
 
+    Vector3 checkpointForward, kartForward;
+
     void Start()
     {
         Checkpoints = FindObjectOfType<Checkpoints>().checkPoints;
@@ -43,27 +45,24 @@ public class CheckpointManager : MonoBehaviour
     }
 
     public void CheckPointReached(Checkpoint checkpoint)
-    {   
-        Debug.Log(checkpoint);
-        if (nextCheckPointToReach != checkpoint) {
-            Debug.Log("SALAHHH CHECKPOINT");
-            kartAgent.AddReward(-0.01f);
-            return;
-        }
-        
+    {
+        kartForward = kartAgent.transform.forward;
+        checkpointForward = nextCheckPointToReach.transform.forward;
+
+        if (nextCheckPointToReach != checkpoint) return;
         lastCheckpoint = Checkpoints[CurrentCheckpointIndex];
         reachedCheckpoint?.Invoke(checkpoint);
         CurrentCheckpointIndex++;
 
         if (CurrentCheckpointIndex >= Checkpoints.Count)
         {
-            kartAgent.AddReward(1f);
+            Debug.Log("FINISHHHH");
+            kartAgent.AddReward(0.5f);
             kartAgent.EndEpisode();
-            Debug.Log("EndEpisode. YEYYY FINISHHH");
         }
         else
         {
-            kartAgent.AddReward((1f) / Checkpoints.Count);
+            kartAgent.AddReward((0.5f) / Checkpoints.Count);
             SetNextCheckpoint();
         }
     }

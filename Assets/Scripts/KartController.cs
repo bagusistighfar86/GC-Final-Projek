@@ -12,6 +12,8 @@ public class KartController : MonoBehaviour
    
    public Transform kartModel;
    public Transform kartNormal;
+   public KartAgent kartAgent;
+   public GameObject respawnPrefab;
    public Rigidbody sphere;
    
    float speed, currentSpeed;
@@ -37,6 +39,8 @@ public class KartController : MonoBehaviour
    {
       speed = acceleration * input;
       currentSpeed = Mathf.SmoothStep(currentSpeed, speed, Time.deltaTime * 12f);
+      // kartAgent.AddReward(currentSpeed * 0.001f);
+      // Debug.Log(currentSpeed);
       speed = 0f;
       currentRotate = Mathf.Lerp(currentRotate, rotate, Time.deltaTime * 4f);
       rotate = 0f;
@@ -59,9 +63,12 @@ public class KartController : MonoBehaviour
    // Kart saat respawn
    public void Respawn()
    {
-      Vector3 pos = _spawnPointManager.SelectRandomSpawnpoint();
+      Vector3 pos = _spawnPointManager.SelectRandomSpawnpoint().position;
+      Quaternion rot = _spawnPointManager.SelectRandomSpawnpoint().rotation;
       sphere.MovePosition(pos);
       transform.position = pos - new Vector3(0, 0.4f, 0);
+      transform.rotation = rot;
+      Debug.Log(rot);
    }
    
    public void FixedUpdate()
@@ -73,9 +80,10 @@ public class KartController : MonoBehaviour
       
       //Mengikuti Collider
       transform.position = sphere.transform.position - new Vector3(0, 0.4f, 0);
-
+      
       //Setir
-      transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, transform.eulerAngles.y + currentRotate, 0), Time.deltaTime * 5f);
+      transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, transform.eulerAngles.y - currentRotate, 0), Time.deltaTime * 5f);
+      // Debug.Log(transform.eulerAngles);
       
       Physics.Raycast(transform.position + (transform.up*.1f), Vector3.down, out RaycastHit hitOn, 1.1f,layerMask);
       Physics.Raycast(transform.position + (transform.up * .1f)   , Vector3.down, out RaycastHit hitNear, 2.0f, layerMask);

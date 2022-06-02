@@ -9,6 +9,7 @@ public class KartAgent : Agent
 {
    public CheckpointManager _checkpointManager;
    private KartController _kartController;
+   // float countDown = 5.0f;
    
    //Dipanggil sekali saat start
    public override void Initialize()
@@ -25,14 +26,33 @@ public class KartAgent : Agent
       _kartController.Respawn();
    }
 
+   void Update () {
+      // countDown -= Time.deltaTime;
+
+      // if(countDown > 0){
+      //    Debug.Log("ARAH BENAR");
+      //    transform.position += Vector3.forward * Time.deltaTime;
+      // }
+      // else if (countDown <= 0.0f){ // You don't want to move backwards too much!
+      //    Debug.Log("SALAHHH ARAH");
+      //    transform.position += Vector3.back * Time.deltaTime;
+      // } 
+ }
+
    #region Edit this region!
 
       //Mengumpulkan informasi tambahan yang tidak diambil oleh RaycastSensors
       public override void CollectObservations(VectorSensor sensor)
       {
-         // Vector3 checkpointForward = _checkpointManager.nextCheckPointToReach.transform.forward;
-         // float directionDot = Vector3.Dot(transform.forward, checkpointForward);
-         // sensor.AddObservation(directionDot);
+         // Vector3 toTarget = (_checkpointManager.nextCheckPointToReach.transform.position - transform.position).normalized;
+         // if (Vector3.Dot(toTarget, transform.forward) > 0) {
+         //    Debug.Log("Target is in front of this game object.");
+         // } else {
+         //    Debug.Log("Target is not in front of this game object.");
+         // }
+         Vector3 checkpointForward = _checkpointManager.nextCheckPointToReach.transform.forward;
+         float directionDot = Vector3.Dot(transform.forward, checkpointForward);
+         sensor.AddObservation(directionDot);
 
          // Vector antara Kart dengan Checkpoint
          Vector3 diff = _checkpointManager.nextCheckPointToReach.transform.position - transform.position;
@@ -48,6 +68,9 @@ public class KartAgent : Agent
 
          _kartController.ApplyAcceleration(input[1]);
          _kartController.Steer(input[0]);
+
+         // Agar terus menambah kecepatan diberikan reward kecil sesuai kecepatannya
+         
       }
       
       //For manual testing with human input, the actionsOut defined here will be sent to OnActionRecieved
@@ -64,12 +87,6 @@ public class KartAgent : Agent
             action[1] = 0f;
          }
       }
-      
-      public void OnTriggerEnter (Collider col){
-         if (col.gameObject.CompareTag("Wall")) {
-            Debug.Log("NABRAK WALLL");
-            AddReward(-0.5f);
-         }
-      }
+
    #endregion
 }
