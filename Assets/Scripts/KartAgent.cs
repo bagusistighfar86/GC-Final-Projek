@@ -76,16 +76,16 @@ public class KartAgent : Agent
       //For manual testing with human input, the actionsOut defined here will be sent to OnActionRecieved
       public override void Heuristic(in ActionBuffers actionsOut)
       {
-         var action = actionsOut.ContinuousActions;
+         // var action = actionsOut.ContinuousActions;
          
-         action[0] = Input.GetAxis("Horizontal"); //Steering
+         // action[0] = Input.GetAxis("Horizontal"); //Steering
 
-         if (Input.GetKey(KeyCode.W)){
-            action[1] = 1f;
-         }
-         else {
-            action[1] = 0f;
-         }
+         // if (Input.GetKey(KeyCode.W)){
+         //    action[1] = 1f;
+         // }
+         // else {
+         //    action[1] = 0f;
+         // }
       }
 
    #endregion

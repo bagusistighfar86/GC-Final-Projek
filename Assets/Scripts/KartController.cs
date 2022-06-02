@@ -96,7 +96,7 @@ public class KartController : MonoBehaviour
    // Menentukan arah setir ke kanan atau ke kiri dan mengatur rotasi
    public void Steer(float steeringSignal)
    {
-      int steerDirection = steeringSignal > 0 ? 1 : -1;
+      int steerDirection = steeringSignal > 0 ? -1 : 1;
       float steeringStrength = Mathf.Abs(steeringSignal);
       
       rotate = (steering * steerDirection) * steeringStrength;
